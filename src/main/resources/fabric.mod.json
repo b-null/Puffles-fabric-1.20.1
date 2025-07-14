@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "puffles",
+	"version": "${version}",
+	"name": "Puffles",
+	"description": "This is a friggin' puffles mod! ",
+	"authors": [
+		"b-null"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/puffles/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"vvbj.modding.puffles.PufflesMod"
+		],
+		"client": [
+			"vvbj.modding.puffles.PufflesModClient"
+		]
+	},
+	"mixins": [
+		"puffles.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "puffles:block/puffle_o_bush_stage0"
+  }
+}

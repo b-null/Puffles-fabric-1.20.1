@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "puffles:item/orange_puffle_spawn_egg"
+  }
+
+}

@@ -1,0 +1,14 @@
+{
+  "entity.puffles.puffle" : "Puffle",
+  "item.puffles.red_puffle_spawn_egg" : "Red Puffle Spawn Egg",
+  "item.puffles.blue_puffle_spawn_egg" : "Blue Puffle Spawn Egg",
+  "item.puffles.yellow_puffle_spawn_egg" : "Yellow Puffle Spawn Egg",
+  "item.puffles.green_puffle_spawn_egg" : "Green Puffle Spawn Egg",
+  "item.puffles.purple_puffle_spawn_egg" : "Purple Puffle Spawn Egg",
+  "item.puffles.orange_puffle_spawn_egg" : "Orange Puffle Spawn Egg",
+  "item.puffles.brown_puffle_spawn_egg" : "Brown Puffle Spawn Egg",
+  "item.puffles.pink_puffle_spawn_egg" : "Pink Puffle Spawn Egg",
+  "item.puffles.black_puffle_spawn_egg" : "Black Puffle Spawn Egg",
+  "item.puffles.white_puffle_spawn_egg" : "White Puffle Spawn Egg",
+  "item.puffles.puffle_o" : "Puffle O"
+}

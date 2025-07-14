@@ -1,0 +1,18 @@
+{
+  "puffle_death": {
+    "sounds": [
+      {
+        "name": "puffles:lego_yoda",
+        "stream": false
+      },
+      {
+        "name": "puffles:meme_1",
+        "stream": false
+      },
+      {
+        "name": "puffles:meme_2",
+        "stream": false
+      }
+    ]
+  }
+}
