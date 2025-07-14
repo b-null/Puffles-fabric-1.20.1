@@ -9,9 +9,9 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/b-null/Puffles-fabric-1.20.1"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/puffles/icon.png",
 	"environment": "*",
 	"entrypoints": {
