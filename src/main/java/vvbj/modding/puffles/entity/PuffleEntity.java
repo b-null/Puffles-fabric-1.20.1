@@ -37,7 +37,6 @@ public class PuffleEntity extends TameableEntity {
 
     public PuffleEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
-        setVariant(Util.getRandom(PuffleVariant.values(), this.getRandom()));
     }
 
     @Override
@@ -98,6 +97,18 @@ public class PuffleEntity extends TameableEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         setVariant(Util.getRandom(PuffleVariant.values(), this.random));
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("variant", getVariant().getId());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        setVariant(PuffleVariant.byId(nbt.getInt("variant")));
     }
 
     @Override
