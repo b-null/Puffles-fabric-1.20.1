@@ -13,12 +13,12 @@ import vvbj.modding.puffles.PufflesMod;
 
 public class WorldGen {
 
-    private static final RegistryKey<PlacedFeature> PUFFLE_O_BUSH = registerKey("puffle_o_bush_placed");
+    private static final RegistryKey<PlacedFeature> O_BERRY_BUSH = registerKey("o_berry_bush_placed");
 
     public static void generateFeatures(){
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                        BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST).and(BiomeSelectors.tag(BiomeTags.IS_TAIGA)),
-                GenerationStep.Feature.TOP_LAYER_MODIFICATION, PUFFLE_O_BUSH);
+                        BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_BEACH).or(BiomeSelectors.tag(BiomeTags.IS_TAIGA)),
+                GenerationStep.Feature.TOP_LAYER_MODIFICATION, O_BERRY_BUSH);
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name){

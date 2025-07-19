@@ -12,9 +12,9 @@ import vvbj.modding.puffles.PufflesMod;
 
 public class BlockRegistry {
 
-    public static Block PUFFLE_O_BUSH = new PuffleOBush(AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
+    public static Block O_BERRY_BUSH = new OBerryBush(AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
 
     public static void register(){
-        Registry.register(Registries.BLOCK, Identifier.of(PufflesMod.MOD_ID, "puffle_o_bush"), PUFFLE_O_BUSH);
+        Registry.register(Registries.BLOCK, Identifier.of(PufflesMod.MOD_ID, "o_berry_bush"), O_BERRY_BUSH);
     }
 }

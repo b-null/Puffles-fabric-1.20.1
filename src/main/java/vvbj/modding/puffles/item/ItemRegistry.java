@@ -24,7 +24,7 @@ public class ItemRegistry {
     public static Item BLACK_PUFFLE_SPAWN_EGG = new PuffleSpawnEgg(PuffleVariant.BLACK);
     public static Item WHITE_PUFFLE_SPAWN_EGG = new PuffleSpawnEgg(PuffleVariant.WHITE);
 
-    public static Item PUFFLE_O = new AliasedBlockItem(BlockRegistry.PUFFLE_O_BUSH, new Item.Settings());
+    public static Item O_BERRY = new AliasedBlockItem(BlockRegistry.O_BERRY_BUSH, new Item.Settings());
 
     public static void register(){
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "red_puffle_spawn_egg"), RED_PUFFLE_SPAWN_EGG);
@@ -37,7 +37,7 @@ public class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "pink_puffle_spawn_egg"), PINK_PUFFLE_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "black_puffle_spawn_egg"), BLACK_PUFFLE_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "white_puffle_spawn_egg"), WHITE_PUFFLE_SPAWN_EGG);
-        Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "puffle_o"), PUFFLE_O);
+        Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "o_berry"), O_BERRY);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
             entries.add(RED_PUFFLE_SPAWN_EGG);
@@ -53,7 +53,7 @@ public class ItemRegistry {
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
-            entries.add(PUFFLE_O);
+            entries.add(O_BERRY);
         });
     }
 }

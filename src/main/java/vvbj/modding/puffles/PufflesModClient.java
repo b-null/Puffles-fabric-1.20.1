@@ -14,7 +14,7 @@ import vvbj.modding.puffles.entity.client.PuffleRenderer;
 public class PufflesModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.PUFFLE_O_BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.O_BERRY_BUSH, RenderLayer.getCutout());
 
         EntityModelLayerRegistry.registerModelLayer(ModelLayers.PUFFLE, PuffleModel::getTexturedModelData);
         EntityRendererRegistry.register(EntityRegistry.PUFFLE, PuffleRenderer::new);

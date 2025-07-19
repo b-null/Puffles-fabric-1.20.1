@@ -43,7 +43,7 @@ public class PuffleEntity extends TameableEntity {
     protected void initGoals() {
         goalSelector.add(0, new SwimGoal(this));
         goalSelector.add(1, new AnimalMateGoal(this, 1.1));
-        goalSelector.add(2, new TemptGoal(this, 1.1, Ingredient.ofItems(ItemRegistry.PUFFLE_O), false));
+        goalSelector.add(2, new TemptGoal(this, 1.1, Ingredient.ofItems(ItemRegistry.O_BERRY), false));
         goalSelector.add(3, new FollowOwnerGoal(this, 1.7, 3, 3, false));
         goalSelector.add(4, new FollowParentGoal(this, 1));
         goalSelector.add(5, new WanderAroundFarGoal(this, 1));
@@ -115,7 +115,7 @@ public class PuffleEntity extends TameableEntity {
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
 
-        if(stack.getItem() == ItemRegistry.PUFFLE_O){
+        if(stack.getItem() == ItemRegistry.O_BERRY){
             if(!isTamed()) {
                 if (this.getWorld().isClient) {
                     return ActionResult.CONSUME;
@@ -156,7 +156,7 @@ public class PuffleEntity extends TameableEntity {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.isOf(ItemRegistry.PUFFLE_O);
+        return stack.isOf(ItemRegistry.O_BERRY);
     }
 
     @Override
