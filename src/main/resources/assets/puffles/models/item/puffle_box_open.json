@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "puffles:item/puffle_box_open"
+  }
+
+}

@@ -10,5 +10,8 @@
   "item.puffles.pink_puffle_spawn_egg" : "Pink Puffle Spawn Egg",
   "item.puffles.black_puffle_spawn_egg" : "Black Puffle Spawn Egg",
   "item.puffles.white_puffle_spawn_egg" : "White Puffle Spawn Egg",
-  "item.puffles.o_berry" : "O' Berry"
+  "item.puffles.o_berry" : "O' Berry",
+  "item.puffles.puffle_box": "Puffle box",
+  "tooltip.puffles.puffle_box.desc" : "A box for carrying up to 4 puffles. Yes, it's just a cardboard box",
+  "tooltip.puffles.puffle_box.count": "[%d/4] puffles"
 }

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import vvbj.modding.puffles.PufflesMod;
 import vvbj.modding.puffles.block.BlockRegistry;
 import vvbj.modding.puffles.entity.PuffleVariant;
@@ -26,6 +27,8 @@ public class ItemRegistry {
 
     public static Item O_BERRY = new AliasedBlockItem(BlockRegistry.O_BERRY_BUSH, new Item.Settings());
 
+    public static Item PUFFLE_BOX = new PuffleBoxItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC).fireproof());
+
     public static void register(){
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "red_puffle_spawn_egg"), RED_PUFFLE_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "blue_puffle_spawn_egg"), BLUE_PUFFLE_SPAWN_EGG);
@@ -38,6 +41,8 @@ public class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "black_puffle_spawn_egg"), BLACK_PUFFLE_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "white_puffle_spawn_egg"), WHITE_PUFFLE_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "o_berry"), O_BERRY);
+
+        Registry.register(Registries.ITEM, new Identifier(PufflesMod.MOD_ID, "puffle_box"), PUFFLE_BOX);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
             entries.add(RED_PUFFLE_SPAWN_EGG);
@@ -54,6 +59,10 @@ public class ItemRegistry {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
             entries.add(O_BERRY);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
+            entries.add(PUFFLE_BOX);
         });
     }
 }

@@ -160,6 +160,8 @@ public class PuffleEntity extends TameableEntity {
                     }
                 }
             }
+        }else if(stack.getItem() == ItemRegistry.PUFFLE_BOX) {
+            return ActionResult.PASS;
         }else{
             if(isTamed() && getOwner() != null && getOwner().getUuid().equals(player.getUuid())){
                 if(getWorld().isClient)
