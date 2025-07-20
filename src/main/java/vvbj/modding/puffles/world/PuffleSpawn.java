@@ -15,9 +15,9 @@ public class PuffleSpawn {
     public static void init(){
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA,
                         BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.SNOWY_PLAINS,
-                                BiomeKeys.SNOWY_BEACH)
-                        .or(BiomeSelectors.tag(BiomeTags.IS_TAIGA)), SpawnGroup.CREATURE, EntityRegistry.PUFFLE,
-                1, 2, 4);
+                                BiomeKeys.SNOWY_BEACH, BiomeKeys.JAGGED_PEAKS)
+                        .or(BiomeSelectors.tag(BiomeTags.IS_TAIGA)).or(biome -> biome.getBiomeRegistryEntry().value().getTemperature() <= 0.35f), SpawnGroup.CREATURE, EntityRegistry.PUFFLE,
+                8, 2, 4);
 
         SpawnRestriction.register(EntityRegistry.PUFFLE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 AnimalEntity::isValidNaturalSpawn);

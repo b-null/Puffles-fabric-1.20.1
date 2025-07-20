@@ -145,6 +145,8 @@ public class PuffleEntity extends TameableEntity {
                     }
                 }
             }
+        }else{
+            setSitting(!isSitting());
         }
         return super.interactMob(player, hand);
     }

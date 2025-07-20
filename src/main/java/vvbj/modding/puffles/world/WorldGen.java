@@ -17,8 +17,9 @@ public class WorldGen {
 
     public static void generateFeatures(){
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                        BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_BEACH).or(BiomeSelectors.tag(BiomeTags.IS_TAIGA)),
-                GenerationStep.Feature.TOP_LAYER_MODIFICATION, O_BERRY_BUSH);
+                        BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_BEACH).or(BiomeSelectors.tag(BiomeTags.IS_TAIGA))
+                        .or(biome -> biome.getBiomeRegistryEntry().value().getTemperature() <= 0.35f),
+                GenerationStep.Feature.VEGETAL_DECORATION, O_BERRY_BUSH);
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name){
