@@ -11,6 +11,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,6 +21,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
@@ -42,6 +44,7 @@ public class PuffleEntity extends TameableEntity {
     @Override
     protected void initGoals() {
         goalSelector.add(0, new SwimGoal(this));
+        goalSelector.add(0, new SitGoal(this));
         goalSelector.add(1, new AnimalMateGoal(this, 1.1));
         goalSelector.add(2, new TemptGoal(this, 1.1, Ingredient.ofItems(ItemRegistry.O_BERRY), false));
         goalSelector.add(3, new FollowOwnerGoal(this, 1.7, 3, 3, false));
@@ -123,13 +126,18 @@ public class PuffleEntity extends TameableEntity {
                     if (!player.isCreative())
                         stack.decrement(1);
 
-                    // Tame
-                    setOwner(player);
-                    navigation.recalculatePath();
-                    setTarget(null);
-                    getWorld().sendEntityStatus(this, (byte) 7);
+                    this.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1f, 1f);
+                    if(this.random.nextInt(3) == 0) {
+                        // Tame
+                        setOwner(player);
+                        navigation.recalculatePath();
+                        setTarget(null);
+                        getWorld().sendEntityStatus(this, (byte) 7);
 
-                    return ActionResult.SUCCESS;
+
+                    }else
+                        this.getWorld().sendEntityStatus(this, (byte)6);
+                    return ActionResult.CONSUME;
                 }
             }else{
                 if(getHealth() < getMaxHealth()) {
@@ -146,7 +154,15 @@ public class PuffleEntity extends TameableEntity {
                 }
             }
         }else{
-            setSitting(!isSitting());
+            if(isTamed() && getOwner() != null && getOwner().getUuid().equals(player.getUuid())){
+                if(getWorld().isClient)
+                    return ActionResult.CONSUME;
+                boolean sitting = !isSitting();
+                setSitting(sitting);
+                setInSittingPose(sitting);
+                player.sendMessage(getName().copy().append(Text.literal(String.format(" is now %s", sitting ? "sitting":"following"))));
+                return ActionResult.SUCCESS;
+            }
         }
         return super.interactMob(player, hand);
     }
