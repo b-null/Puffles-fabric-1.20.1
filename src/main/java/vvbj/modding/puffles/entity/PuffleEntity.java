@@ -11,13 +11,11 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -46,12 +44,11 @@ public class PuffleEntity extends TameableEntity {
         goalSelector.add(0, new SwimGoal(this));
         goalSelector.add(0, new SitGoal(this));
         goalSelector.add(1, new AnimalMateGoal(this, 1.1));
-        goalSelector.add(2, new TemptGoal(this, 1.1, Ingredient.ofItems(ItemRegistry.O_BERRY), false));
-        goalSelector.add(3, new FollowOwnerGoal(this, 1.7, 3, 3, false));
-        goalSelector.add(4, new FollowParentGoal(this, 1));
-        goalSelector.add(5, new WanderAroundFarGoal(this, 1));
-        goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 4));
-        goalSelector.add(7, new LookAroundGoal(this));
+        goalSelector.add(2, new FollowOwnerGoal(this, 1.7, 3, 3, false));
+        goalSelector.add(3, new FollowParentGoal(this, 1));
+        goalSelector.add(4, new WanderAroundFarGoal(this, 1));
+        goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 4));
+        goalSelector.add(6, new LookAroundGoal(this));
     }
 
     public static DefaultAttributeContainer.Builder createAttributes(){
@@ -63,7 +60,16 @@ public class PuffleEntity extends TameableEntity {
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return EntityRegistry.PUFFLE.create(world);
+        PuffleEntity child = EntityRegistry.PUFFLE.create(world);
+        if(child != null){
+            if(this.isTamed()){
+                child.setTamed(true);
+                child.setOwnerUuid(getOwnerUuid());
+            }
+
+            child.setVariant(Util.getRandom(PuffleVariant.values(), this.random));
+        }
+        return child;
     }
 
     @Nullable
@@ -134,12 +140,13 @@ public class PuffleEntity extends TameableEntity {
                         setTarget(null);
                         getWorld().sendEntityStatus(this, (byte) 7);
 
-
                     }else
                         this.getWorld().sendEntityStatus(this, (byte)6);
                     return ActionResult.CONSUME;
                 }
             }else{
+                if(getOwner() != null && !getOwner().getUuid().equals(player.getUuid()))
+                    return ActionResult.FAIL;
                 if(getHealth() < getMaxHealth()) {
                     if (this.getWorld().isClient)
                         return ActionResult.CONSUME;
