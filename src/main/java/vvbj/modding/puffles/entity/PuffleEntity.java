@@ -53,7 +53,7 @@ public class PuffleEntity extends TameableEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes(){
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 12)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15);
     }
 
@@ -169,7 +169,7 @@ public class PuffleEntity extends TameableEntity {
                 boolean sitting = !isSitting();
                 setSitting(sitting);
                 setInSittingPose(sitting);
-                player.sendMessage(getName().copy().append(Text.literal(String.format(" is now %s", sitting ? "sitting":"following"))));
+                player.sendMessage(getName().copy().append(Text.literal(String.format(" is now %s", sitting ? "sitting":"following you"))), true);
                 return ActionResult.SUCCESS;
             }
         }
@@ -193,7 +193,7 @@ public class PuffleEntity extends TameableEntity {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20.0);
             this.setHealth(20.0F);
         } else {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(12.0);
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(10.0);
         }
     }
 }
