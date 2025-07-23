@@ -93,7 +93,7 @@ public class PuffleBoxItem extends Item {
                 output.append(" [").append("Pink").setStyle(Style.EMPTY.withColor(0xF79494)).append("]");
                 break;
             case 8:
-                output.append(" [").append("Black").formatted(Formatting.BLACK).append("]");
+                output.append(" [").append("Black").formatted(Formatting.DARK_GRAY).append("]");
                 break;
             case 9:
                 output.append(" [White]");
