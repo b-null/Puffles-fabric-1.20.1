@@ -8,8 +8,7 @@
 		"b-null"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/b-null/Puffles-fabric-1.20.1"
+		"sources": "https://github.com/b-null/Puffles-fabric"
 	},
 	"license": "MIT",
 	"icon": "assets/puffles/icon.png",
