@@ -34,15 +34,6 @@
                   -1,
                   0
                 ]
-              },
-              {
-                "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:dirt",
-                "offset": [
-                  0,
-                  -1,
-                  0
-                ]
               }
             ]
           }
