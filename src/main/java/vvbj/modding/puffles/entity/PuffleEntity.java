@@ -63,7 +63,7 @@ public class PuffleEntity extends TameableEntity {
         PuffleEntity child = EntityRegistry.PUFFLE.create(world);
         if(child != null){
             if(this.isTamed()){
-                child.setTamed(true);
+                child.setTamed(true, true);
                 child.setOwnerUuid(getOwnerUuid());
             }
 
@@ -85,9 +85,9 @@ public class PuffleEntity extends TameableEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(DATA_ID_TYPE_VARIANT, 0);
     }
 
     public PuffleVariant getVariant(){
@@ -103,9 +103,9 @@ public class PuffleEntity extends TameableEntity {
     }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         setVariant(Util.getRandom(PuffleVariant.values(), this.random));
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -187,8 +187,8 @@ public class PuffleEntity extends TameableEntity {
     }
 
     @Override
-    public void setTamed(boolean tamed) {
-        super.setTamed(tamed);
+    public void setTamed(boolean tamed, boolean updateAttributes) {
+        super.setTamed(tamed, updateAttributes);
         if (tamed) {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20.0);
             this.setHealth(20.0F);

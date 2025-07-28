@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -27,6 +28,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
+import vvbj.modding.puffles.Utils;
 import vvbj.modding.puffles.entity.EntityRegistry;
 import vvbj.modding.puffles.entity.PuffleEntity;
 import vvbj.modding.puffles.entity.PuffleVariant;
@@ -135,7 +137,7 @@ public class PuffleSpawnEgg extends Item {
     }
 
     public Optional<MobEntity> spawnBaby(PlayerEntity user, PuffleEntity entity, EntityType<? extends MobEntity> entityType, ServerWorld world, Vec3d pos, ItemStack stack) {
-        if (!this.isOfSameEntityType(stack.getNbt(), entityType)) {
+        if (!this.isOfSameEntityType(Utils.getOrCreateNbt(stack), entityType)) {
             return Optional.empty();
         } else {
             MobEntity child = entity.createChild(world, entity);
@@ -146,8 +148,9 @@ public class PuffleSpawnEgg extends Item {
                 } else {
                     childPuffle.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
                     world.spawnEntityAndPassengers(childPuffle);
-                    if (stack.hasCustomName()) {
-                        childPuffle.setCustomName(stack.getName());
+                    var custom_name = stack.get(DataComponentTypes.CUSTOM_NAME);
+                    if (custom_name != null) {
+                        childPuffle.setCustomName(custom_name.copy());
                     }
 
                     if (!user.getAbilities().creativeMode) {

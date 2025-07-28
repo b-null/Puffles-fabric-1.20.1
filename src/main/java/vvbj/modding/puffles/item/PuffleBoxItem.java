@@ -1,7 +1,8 @@
 package vvbj.modding.puffles.item;
 
-import com.google.gson.JsonParser;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,12 +21,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import vvbj.modding.puffles.entity.PuffleEntity;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+
+import static vvbj.modding.puffles.Utils.getOrCreateNbt;
 
 public class PuffleBoxItem extends Item {
 
@@ -36,34 +38,34 @@ public class PuffleBoxItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        if(!world.isClient) return;
-
-        stack.getOrCreateNbt();
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         // Desc
         tooltip.add(Text.translatable("tooltip.puffles.puffle_box.desc").formatted(Formatting.GRAY));
         // Count
         tooltip.add(Text.translatable("tooltip.puffles.puffle_box.count", getPuffleCount(stack)));
         // Each puffle data
-        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtCompound nbt = getOrCreateNbt(stack);
         NbtList data = nbt.getList("puffles", NbtElement.COMPOUND_TYPE);
         if(data != null){
             for(int i = 0; i < data.size(); i++){
                 NbtCompound puffle = data.getCompound(i);
                 int variant = puffle.getInt("variant");
                 String name = "Puffle";
-               if(puffle.contains("CustomName")) {
-                   String customName = puffle.getString("CustomName");
-                   name = JsonParser.parseString(customName).getAsJsonObject().get("text").getAsString();
-               }
+                if(puffle.contains("CustomName")){
+                    name = puffle.getString("CustomName");
+                    name = name.substring(1, name.length() - 1).replaceAll("(\\\\(?=[^\\\\]))", "");
+                }
 
                 tooltip.add(getTextFromPuffle(name, variant));
             }
         }
+        // Write
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
     }
+
 
     private Text getTextFromPuffle(String name, int variant){
         MutableText output = Text.literal(name);
@@ -116,7 +118,7 @@ public class PuffleBoxItem extends Item {
 
                     puffle.discard();
 
-                    user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 1f, 1f);
+                    user.getWorld().playSound(null, user.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER.value(), SoundCategory.PLAYERS, 1f, 1f);
                     return ActionResult.SUCCESS;
                 }
             }
@@ -146,7 +148,7 @@ public class PuffleBoxItem extends Item {
     }
 
     private void addPuffle(NbtCompound data, ItemStack stack){
-        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtCompound nbt = getOrCreateNbt(stack);
         NbtList list = nbt.getList("puffles", NbtElement.COMPOUND_TYPE);
         if(list != null) {
             list.add(data);
@@ -156,23 +158,28 @@ public class PuffleBoxItem extends Item {
             list.add(data);
             nbt.put("puffles", list);
         }
+        // Write
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
     }
 
     private NbtCompound getLastPuffle(ItemStack stack){
-        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtCompound nbt = getOrCreateNbt(stack);
         NbtList list = nbt.getList("puffles", NbtElement.COMPOUND_TYPE);
         if(list != null && !list.isEmpty()){
             NbtCompound puffle = list.getCompound(list.size() - 1);
             // now remove it
             list.remove(list.size() - 1);
             nbt.put("puffles", list);
+
+            // Write
+            stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
             return puffle;
         }
         return null;
     }
 
     private int getPuffleCount(ItemStack stack){
-        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtCompound nbt = getOrCreateNbt(stack);
         NbtList list = nbt.getList("puffles", NbtElement.COMPOUND_TYPE);
         if(list != null){
             return list.size();
@@ -181,7 +188,7 @@ public class PuffleBoxItem extends Item {
     }
 
     public static boolean hasPuffles(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
+        NbtCompound nbt = getOrCreateNbt(stack);
         return nbt != null && nbt.contains("puffles", NbtElement.LIST_TYPE) &&
                 !nbt.getList("puffles", NbtElement.COMPOUND_TYPE).isEmpty();
     }

@@ -18,7 +18,7 @@
     "PSP"
   ],
   "result": {
-    "item": "puffles:puffle_box"
+    "id": "puffles:puffle_box"
   },
   "show_notification": true
 }
